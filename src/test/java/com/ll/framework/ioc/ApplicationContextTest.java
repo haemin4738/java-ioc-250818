@@ -9,13 +9,13 @@ public class ApplicationContextTest {
 
     @BeforeAll
     public static void beforeAll() {
-        ApplicationContext applicationContext1 = new ApplicationContext("com.ll");
+        ApplicationContext applicationContext = new ApplicationContext("com.ll");
         applicationContext.init();
     }
 
     @Test
     @DisplayName("ApplicationContext 객체 생성")
-    public void t1 () {
+    public void t1() {
         System.out.println(applicationContext);
     }
 }
