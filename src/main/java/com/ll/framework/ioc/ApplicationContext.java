@@ -2,11 +2,16 @@ package com.ll.framework.ioc;
 
 import com.ll.domain.testPost.service.TestPostService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ApplicationContext {
     private String basePackage;
+    private Map<String, Object> beans;
 
     public ApplicationContext(String basePackage) {
         this.basePackage = basePackage;
+        beans = new HashMap<>();
     }
 
     public void init() {
@@ -14,10 +19,15 @@ public class ApplicationContext {
     }
 
     public <T> T genBean(String beanName) {
-        if (beanName.equals("testPostService")) {
-            return (T) new TestPostService();
-        }
+        Object bean = beans.get(beanName);
 
-        return null;
+        if(bean == null) {
+            bean = switch (beanName) {
+                case "testPostService" -> new TestPostService();
+                default -> null;
+            };
+            beans.put(beanName, bean);
+        }
+        return (T) bean;
     }
 }
